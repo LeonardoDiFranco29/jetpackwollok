@@ -1,0 +1,73 @@
+import example.* //Importa todo
+
+describe "pepita"{
+
+    test "pepita come alpiste y aumenta su energía" {
+
+        pepita.comer(alpiste)
+
+        assert.equals(120, pepita.energia())
+
+        pepita.comer(manzana)
+
+        assert.equals(125, pepita.energia())
+
+    }
+
+    test "pepita vuela y disminuye su energia"{
+
+        assert.equals(100, pepita.energia())
+
+        pepita.volar(10)
+
+        assert.equals(80, pepita.energia())
+
+    }
+
+} 
+
+describe "roque con pepon"{
+
+    //Inicialización / SetUp
+    method initialize(){
+        roque.agarrarAve(pepon)
+    }
+
+    test "roque alimenta a su ave con alpiste"{
+        
+        assert.equals(0, roque.cenas())
+
+        //Que quiero probar / Exercise 
+        roque.alimentar(alpiste)
+
+        // Assert
+        assert.equals(1, roque.cenas())
+        
+        assert.equals(120, pepita.energia())
+
+    }
+
+}
+
+
+describe "roque"{
+
+    test "roque alimenta a su ave con alpiste"{
+        
+        assert.equals(0, roque.cenas())
+
+        roque.alimentar(alpiste)
+
+        assert.equals(1, roque.cenas())
+        assert.equals(120, pepita.energia())
+
+
+    }
+
+}
+
+    //assert.equals(expected, actual)
+    //assert.notequals(expected, actual)
+
+    //assert.That(value) se utiliza para comparar booleanos
+    //assert.notThat(value)
