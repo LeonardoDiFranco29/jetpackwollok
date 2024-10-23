@@ -178,7 +178,7 @@ object ssj {
 object picolo {
 	var property imagenes = ["pi1.png","pi2.png","pi3.png","pi4.png","pi5.png","pi6.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png"]
 	var property imagenActualIndex = 0
-	var property position = game.at(4, 4)
+	var property position = game.at(8, 4)
 	var property transformacion = self
 
 	method agarroMoneda() {
@@ -254,7 +254,7 @@ object vegeta {
 object gohan {
 	var property imagenes = ["gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png"]
 	var property imagenActualIndex = 0
-	var property position = game.at(4, 6)
+	var property position = game.at(7, 6)
 	var property transformacion = self
 
 	method agarroMoneda() {
