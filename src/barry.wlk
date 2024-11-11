@@ -24,31 +24,6 @@ object barry {
     method caer() {
 	  	transformacion.caer()
 	}
-	
-	/*
-	method equiparseEscudo() {
-		if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
-		transformacion = barryConEscudo
-		administrador.sumarVida(1)
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})} 
-		else if (contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3){
-		transformacion = barryConEscudo
-		administrador.sumarVida(1)
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})}
-		else if (contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4){
-		transformacion = barryConEscudo
-		administrador.sumarVida(1)
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})}
-		else if (contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5){
-		transformacion = barryConEscudo
-		administrador.sumarVida(1)
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})}
-	}
-	*/
 
 	method equiparseEscudo() {
 		transformacion = barryConEscudo
@@ -56,25 +31,6 @@ object barry {
 		game.schedule(20000, {self.destransformarse()})
 		game.schedule(20000, {contadorVidasBarry.vidas(1)}) 
 	}
-
-	/*
-	method transformarse() {
-		if (0.randomUpTo(100) < 5) {
-			transformacion = ssj
-			administrador.sumarVida(2)
-			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
-			self.destransformacion()
-		} else if(0.randomUpTo(100) < 90){
-			transformacion = profitBird
-			administrador.sumarVida(1)
-			self.destransformacion()
-		} else {
-			transformacion = millonario
-			administrador.sumarVida(1)
-			self.destransformacion()
-		}
-	}
-	*/
 
 	method transformarse() {
 		if (0.randomUpTo(100) < 90) {
@@ -99,24 +55,6 @@ object barry {
 		game.schedule(20000, {self.destransformarse()})
 		game.schedule(20000, {contadorVidasBarry.vidas(1)})
 	}
-	
-		/*
-		transformacion = gravedad
-		game.removeTickEvent("gravedad")
-		//game.onTick(50, "subirGravedad", {self.volar()})
-		administrador.sumarVida(1)
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})
-
-		if (0.randomUpTo(100) < 30) {
-        transformacion = "ssj"  // 30% de probabilidad de convertirse en ssj
-		contadorVidasBarry.agregarVidas(2)
-		game.onTick(60, "ssjimagen", {self.cambiarImagen()} )
-    } else {
-        transformacion = "gravedad"  // 70% de probabilidad de convertirse en gravedad
-		game.removeTickEvent("gravedad")
-		contadorVidasBarry.agregarVidas(1)
-    }	*/	
 
 	method destransformarse() {
 		transformacion = normal
