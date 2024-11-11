@@ -110,6 +110,7 @@ class ObjetoVolador {
     var property imagenes = null
     var property imagenActualIndex = 0
     var property generador = null
+    var property imagenActual = imagenes
 
     method cambiarImagen() {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
@@ -170,8 +171,10 @@ class ObjetoVolador {
 
 class Misil inherits ObjetoVolador {
 
+    const explosiones = ["explosion1.png","explosion1.png","explosion1.png","explosion1.png","explosion1.png","explosion1.png"]
+
     override method image() {
-        return imagenes.get(imagenActualIndex)
+        return imagenActual.get(imagenActualIndex)
     }
 
     override method prefijoDeEvento() {
@@ -189,14 +192,14 @@ class Misil inherits ObjetoVolador {
             personaje.transformacion().colisiono(personaje)
         }
         administrador.sacarMoneda(5)
-        
-        self.llegoAlBorde()
+    
+       self.explotar()
         
     }
 
     method explotar() {
-      imagenes.remove(["misil1.png", "misil2.png", "misil3.png", "misil4.png", "misil5.png", "misil6.png"])
-      imagenes.add(["explosion1.png","explosion1.png","explosion1.png","explosion1.png","explosion1.png"])
+      imagenActual = explosiones
+      
     }
 
 

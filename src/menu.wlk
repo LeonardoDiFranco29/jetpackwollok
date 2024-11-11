@@ -5,7 +5,6 @@ import extras.*
 import randomizer.*
 
 object administradorEscudo {
-    
     method verificarEscudo() {
         if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
 		    barry.equiparseEscudo()
