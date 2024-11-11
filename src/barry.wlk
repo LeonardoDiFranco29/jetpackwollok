@@ -25,10 +25,7 @@ object barry {
 	  	transformacion.caer()
 	}
 	
-	
-
-	
-
+	/*
 	method equiparseEscudo() {
 		if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
 		transformacion = barryConEscudo
@@ -50,28 +47,59 @@ object barry {
 		administrador.sumarVida(1)
 		game.schedule(20000, {self.destransformarse()})
 		game.schedule(20000, {contadorVidasBarry.vidas(1)})}
+	}
+	*/
 
+	method equiparseEscudo() {
+		transformacion = barryConEscudo
+		administrador.sumarVida(1)
+		game.schedule(20000, {self.destransformarse()})
+		game.schedule(20000, {contadorVidasBarry.vidas(1)}) 
 	}
 
+	/*
 	method transformarse() {
-		if (0.randomUpTo(100) < 90) {
-		transformacion = ssj
-		administrador.sumarVida(2)
-		game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
-		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})
-		
-		} else if(0.randomUpTo(100) < 50){
+		if (0.randomUpTo(100) < 5) {
+			transformacion = ssj
+			administrador.sumarVida(2)
+			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
+			self.destransformacion()
+		} else if(0.randomUpTo(100) < 90){
 			transformacion = profitBird
 			administrador.sumarVida(1)
-			game.schedule(20000, {self.destransformarse()})
-			game.schedule(20000, {contadorVidasBarry.vidas(1)})
+			self.destransformacion()
 		} else {
 			transformacion = millonario
 			administrador.sumarVida(1)
-			game.schedule(20000, {self.destransformarse()})
-			game.schedule(20000, {contadorVidasBarry.vidas(1)})
+			self.destransformacion()
 		}
+	}
+	*/
+
+	method transformarse() {
+		if (0.randomUpTo(100) < 90) {
+			self.transformarseA(ssj)
+			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
+			self.destransformacion()
+		} else if(0.randomUpTo(100) < 5){
+			self.transformarseA(profitBird)
+			self.destransformacion()
+		} else {
+			self.transformarseA(millonario)
+			self.destransformacion()
+		}
+	}
+
+	method transformarseA(_transformacion) {
+		transformacion = _transformacion
+		administrador.sumarVida(_transformacion.vidas())
+	}
+
+	method destransformacion() {
+		game.schedule(20000, {self.destransformarse()})
+		game.schedule(20000, {contadorVidasBarry.vidas(1)})
+	}
+	
 		/*
 		transformacion = gravedad
 		game.removeTickEvent("gravedad")
@@ -89,7 +117,6 @@ object barry {
 		game.removeTickEvent("gravedad")
 		contadorVidasBarry.agregarVidas(1)
     }	*/	
-}
 
 	method destransformarse() {
 		transformacion = normal
@@ -104,41 +131,75 @@ object barry {
 	}
 
 	method agarroMoneda() {
-		if (self.transformacion() == profitBird or self.transformacion() == millonario){administrador.sumarMoneda(2)
-	} else {administrador.sumarMoneda(1)}
-	}
-}
-object normal {
-	var property image = "barrynormal.png"
-
-	method volar() {
-		barry.mover(arriba)
-		image = "barryvolando.png"
-	}
-
-	method caer() {
-	  	barry.mover(abajo)
-	  	image = "barrynormal.png"
-	}
-}
-
-object ssj {
-	var property imagenes = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"]
-	var property imagenActualIndex = 0
-	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
-	var property imagenesActual = imagenes
-	var property ki = 100
-
-	method volar() {
-		barry.mover(arriba)
-	}
-
-	method caer() {
-	  	barry.mover(abajo)
+		transformacion.sumarMoneda()
 	}
 
 	method lanzarPoder() {
-	  if (contadorMonedas.monedas()>= 10 and barry.transformacion() == ssj and self.ki() == 100){
+		transformacion.lanzarPoder()
+	}
+}
+
+class Transformacion {
+	var property image
+	var property vidas
+
+	method volar() {
+		barry.mover(arriba)
+		self.ponerImagenVolando()
+	}
+
+	method ponerImagenVolando()
+	
+	method caer() {
+		barry.mover(abajo)
+		self.ponerImagenCayendo()
+	}
+
+	method ponerImagenCayendo()
+	
+	method lanzarPoder() {
+
+	}
+
+	method sumarMoneda() {
+		administrador.sumarMoneda(self.cantidadMonedasQueAgarra())
+	}
+
+	method cantidadMonedasQueAgarra()
+
+	method colisiono(personaje) {
+		administrador.sacarVida(1)
+        personaje.destransformarse()
+	}
+}
+
+object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
+
+	override method ponerImagenVolando() {
+		image = "barryvolando.png"
+	}
+
+	override method ponerImagenCayendo() {
+	  	image = "barrynormal.png"
+	}
+
+	override method cantidadMonedasQueAgarra() {
+		return 1
+	}
+
+	override method colisiono(personaje) {
+
+	}
+}
+
+object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 2){
+	var property imagenActualIndex = 0
+	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
+	var property imagenesActual = image
+	var property ki = 100
+
+	override method lanzarPoder() {
+	  if (contadorMonedas.monedas()>= 30 and self.ki() == 100){
 		game.removeTickEvent("ssjimagen")
 		imagenesActual = imagenesPoder
 		game.onTick(200, "ssjimagen", {self.cambiarImagen()})
@@ -149,29 +210,37 @@ object ssj {
 		administrador.sumarVida(20)
 		self.ki(0)
 	  }
-
-
-
 	}
 
 	method ponerImagenesDefault() {
 	 game.removeTickEvent("ssjimagen") 
-	 imagenesActual = imagenes
+	 imagenesActual = image
 	 game.onTick(60, "ssjimagen", {self.cambiarImagen()}) 
 	}
 
-	method image() {
+	override method image() {
 		return imagenesActual.get(imagenActualIndex)
 	}
 
 	method cambiarImagen() {
-        imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
+        imagenActualIndex = (imagenActualIndex + 1) % image.size()
     }
 
-	method colisiono(personaje) {
-		administrador.sacarVida(1)
-        personaje.destransformarse()
+	override method colisiono(personaje) {
+		super(personaje)
         game.removeTickEvent("ssjimagen")
+	}
+
+	override method cantidadMonedasQueAgarra() {
+		return 1
+	}
+
+	override method ponerImagenVolando() {
+
+	}
+
+	override method ponerImagenCayendo() {
+
 	}
 }
 
@@ -224,7 +293,6 @@ object vegeta {
 	}
 
 	method lanzarPoder() {
-	  
 	  game.addVisual(self)
 	  game.onTick(200, "vegeta", {self.cambiarImagen()})
 	  game.schedule(15000, {self.ponerImagenesDefault()})
@@ -289,63 +357,48 @@ object gohan {
 	}
 }
 
+object profitBird inherits Transformacion(image = "goldbird3.png", vidas = 1) {
 
-
-
-object profitBird {
-	var property image = "goldbird3.png"
-
-	method volar() {
-		barry.mover(arriba)
+	override method ponerImagenVolando() {
 		image = "goldbird1.png"
 	}
 
-	method caer() {
-	  	barry.mover(abajo)
+	override method ponerImagenCayendo() {
 	  	image = "goldbird3.png"
 	}
 
-	method colisiono(personaje) {
-		administrador.sacarVida(1)
-        personaje.destransformarse()
-	}
+	override method cantidadMonedasQueAgarra() {
+		return 2
+	} 
 }
 
-object barryConEscudo {
-	var property image = "barrynormalconescudo.png"
+object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png", vidas = 1){
 	
-	method volar() {
-		barry.mover(arriba)
+	override method ponerImagenVolando() {
 		image = "barryvolandoconescudo.png"
 	}
 
-	method caer() {
-	  	barry.mover(abajo)
+	override method ponerImagenCayendo() {
 	  	image = "barrynormalconescudo.png"
 	}
 
-	method colisiono(personaje) {
-		administrador.sacarVida(1)
-        personaje.destransformarse()
-	}
+	override method cantidadMonedasQueAgarra() {
+		return 1
+	} 
 }
 
-object millonario {
-	var property image = "barryrich1.png"
+object millonario inherits Transformacion (image = "barryrich1.png", vidas = 1){
 
-	method volar() {
-		barry.mover(arriba)
+	override method ponerImagenVolando() {
 		image = "barryrich2.png"
 	}
 
-	method caer() {
-	  	barry.mover(abajo)
+	override method ponerImagenCayendo() {
 	  	image = "barryrich1.png"
 	}
 
-	method colisiono(personaje) {
-		administrador.sacarVida(1)
-        personaje.destransformarse()
-	}
+	override method cantidadMonedasQueAgarra() {
+		return 2
+	} 
 }
 

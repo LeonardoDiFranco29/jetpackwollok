@@ -4,6 +4,21 @@ import posiciones.*
 import extras.*
 import randomizer.*
 
+object administradorEscudo {
+    
+    method verificarEscudo() {
+        if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
+		    barry.equiparseEscudo()
+        } else if (contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3){
+		    barry.equiparseEscudo()
+		} else if (contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4){
+            barry.equiparseEscudo()
+		} else if (contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5){
+		    barry.equiparseEscudo()
+        }
+    }
+}
+
 object administrador {
 
     method sumarMoneda(num) {
@@ -179,12 +194,12 @@ class Menu {
         
 
 	    keyboard.up().onPressDo({barry.volar()})
-        keyboard.space().onPressDo({ssj.lanzarPoder()})
+        keyboard.space().onPressDo({barry.lanzarPoder()})
 	    //keyboard.s().onPressDo({generadorDeObjetos.subirGravedad()})
         //keyboard.w().onPressDo({generadorDeObjetos.bajarGravedad()})
   
         game.onTick(50000, "fondo", {fondoJuego.subirNivel()})
-        game.onTick(50100, "barryescudo", {barry.equiparseEscudo()})
+        game.onTick(50100, "barryescudo", {administradorEscudo.verificarEscudo()})
         game.schedule(250200, {administrador.pararJuegoYMostrarGameOver()})
         // Colisiones
         game.onCollideDo(barry, {cosa => cosa.colisiono(barry)}) 

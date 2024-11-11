@@ -82,9 +82,12 @@ object generadorDeMonedas inherits Generador{
         return 400
     }
     override method position() {
-        return if (barry.transformacion()== millonario)
-        {game.at(12, barry.position().y())}
-        else {super()}
+        return if (barry.transformacion() == millonario) {
+            game.at(12, barry.position().y())
+        }
+        else {
+            super()
+        }
     }
 }
 
@@ -175,6 +178,8 @@ class Misil inherits ObjetoVolador {
         return "misil"
     }
 
+
+    // Revisar
     method colisiono(personaje) {
         if (contadorVidasBarry.vidas() == 1){
             game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
