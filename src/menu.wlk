@@ -24,17 +24,19 @@ object administrador {
         contadorMonedas.agregarMoneda(num)
     }
 
-    method sacarVida(vida) {
-        contadorVidasBarry.restarVida(vida)
-    } 
-
     method sacarMoneda(num) {
-      contadorMonedas.restarMoneda(num)
+        contadorMonedas.restarMoneda(num)
     }
 
+    /*
     method sumarVida(vida) {
-        contadorVidasBarry.agregarVidas(vida)
+        barry.agregarVidas(vida)
     }
+
+    method sacarVida(vida) {
+        barry.restarVidas(vida)
+    } 
+    */
 
     method pararJuegoYMostrarGameOver() {
 	    game.removeVisual(botonPlay)
@@ -71,24 +73,19 @@ object contadorMonedas {
 }
 
 object contadorVidasBarry {
-    var property vidas = 1
     var property position = game.at(0,8)
     
+    method vidas() {
+        return barry.vidas()
+    }
+
     method text() {
-        return vidas.toString()
+        return self.vidas().toString()
     }
 
     method textColor() {
         return "FF0000FF"
     }
-
-    method agregarVidas(vida) {
-        vidas = vidas + vida
-    } 
-
-    method restarVida(vida) {
-        vidas -= vida
-    }    
 }
 
 object fondoMenu {

@@ -6,6 +6,7 @@ import menu.*
 object barry {
 	var property position = game.at(1,5)
 	var property transformacion = normal
+	var property vidas = 1
 
 	method image() {
 		return transformacion.image()
@@ -27,9 +28,8 @@ object barry {
 
 	method equiparseEscudo() {
 		transformacion = barryConEscudo
-		administrador.sumarVida(1)
+		self.vidas(2)
 		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)}) 
 	}
 
 	method transformarse() {
@@ -48,12 +48,11 @@ object barry {
 
 	method transformarseA(_transformacion) {
 		transformacion = _transformacion
-		administrador.sumarVida(_transformacion.vidas())
+		self.vidas(_transformacion.vidas())
 	}
 
 	method destransformacion() {
 		game.schedule(20000, {self.destransformarse()})
-		game.schedule(20000, {contadorVidasBarry.vidas(1)})
 	}
 
 	method destransformarse() {
@@ -63,6 +62,7 @@ object barry {
 		picolo.ponerImagenesDefault()
 		vegeta.ponerImagenesDefault()
 		gohan.ponerImagenesDefault()
+		self.vidas(1)
 		//game.removeTickEvent("bajarGravedad")
 		//game.removeTickEvent("subirGravedad")
 		//generadorDeObjetos.gravedad()
@@ -74,6 +74,16 @@ object barry {
 
 	method lanzarPoder() {
 		transformacion.lanzarPoder()
+	}
+
+	method restarVidas(vida) {
+		vidas -= vida
+		contadorVidasBarry.vidas(self.vidas())
+	}
+
+	method agregarVidas(vida) {
+		vidas += vida
+		contadorVidasBarry.vidas(self.vidas())
 	}
 }
 
@@ -106,7 +116,7 @@ class Transformacion {
 	method cantidadMonedasQueAgarra()
 
 	method colisiono(personaje) {
-		administrador.sacarVida(1)
+		personaje.restarVidas(1)
         personaje.destransformarse()
 	}
 }
@@ -130,7 +140,7 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	}
 }
 
-object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 2){
+object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 3){
 	var property imagenActualIndex = 0
 	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
 	var property imagenesActual = image
@@ -145,7 +155,6 @@ object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2
 		picolo.lanzarPoder()
 		vegeta.lanzarPoder()
 		gohan.lanzarPoder()
-		administrador.sumarVida(20)
 		self.ki(0)
 	  }
 	}
@@ -295,7 +304,7 @@ object gohan {
 	}
 }
 
-object profitBird inherits Transformacion(image = "goldbird3.png", vidas = 1) {
+object profitBird inherits Transformacion(image = "goldbird3.png", vidas = 2) {
 
 	override method ponerImagenVolando() {
 		image = "goldbird1.png"
@@ -310,7 +319,7 @@ object profitBird inherits Transformacion(image = "goldbird3.png", vidas = 1) {
 	} 
 }
 
-object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png", vidas = 1){
+object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png", vidas = 2){
 	
 	override method ponerImagenVolando() {
 		image = "barryvolandoconescudo.png"
@@ -325,7 +334,7 @@ object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png"
 	} 
 }
 
-object millonario inherits Transformacion (image = "barryrich1.png", vidas = 1){
+object millonario inherits Transformacion (image = "barryrich1.png", vidas = 2){
 
 	override method ponerImagenVolando() {
 		image = "barryrich2.png"

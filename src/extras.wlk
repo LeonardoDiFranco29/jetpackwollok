@@ -184,11 +184,11 @@ class Misil inherits ObjetoVolador {
 
     // Revisar
     method colisiono(personaje) {
-        if (contadorVidasBarry.vidas() == 1){
+        if (personaje.vidas() == 1){
             game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
-        } else if (contadorVidasBarry.vidas() >= 3){
-            administrador.sacarVida(1)
-        } else if (contadorVidasBarry.vidas() == 2){
+        } else if (personaje.vidas() >= 3){
+            personaje.restarVidas(1)
+        } else if (personaje.vidas() == 2){
             personaje.transformacion().colisiono(personaje)
         }
         administrador.sacarMoneda(5)
