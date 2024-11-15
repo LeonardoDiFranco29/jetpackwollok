@@ -27,9 +27,19 @@ object barry {
 	}
 
 	method equiparseEscudo() {
-		transformacion = barryConEscudo
-		self.vidas(2)
-		game.schedule(20000, {self.destransformarse()})
+		if(self.puedoPonermeEscudo()){
+			transformacion = barryConEscudo
+			self.vidas(2)
+			game.schedule(20000, {self.destransformarse()})
+		}
+	}
+
+	method puedoPonermeEscudo() {
+		return (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2) or 
+				(contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3) or 
+				(contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4) or 
+				(contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5)
+	  
 	}
 
 	method transformarse() {
@@ -78,12 +88,12 @@ object barry {
 
 	method restarVidas(vida) {
 		vidas -= vida
-		contadorVidasBarry.vidas(self.vidas())
+		contadorVidasBarry.vidas(self)
 	}
 
 	method agregarVidas(vida) {
 		vidas += vida
-		contadorVidasBarry.vidas(self.vidas())
+		contadorVidasBarry.vidas(self)
 	}
 }
 
@@ -196,6 +206,9 @@ object picolo {
 	var property imagenActualIndex = 0
 	var property position = game.at(8, 4)
 	var property transformacion = self
+	var property vidas = 100000
+
+	
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
@@ -224,8 +237,12 @@ object picolo {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
+	method restarVidas(vida) {
+		vidas -= vida
+	}
+
 	method colisiono(personaje) {
-		
+		self.restarVidas(1)
 	}
 }
 
@@ -234,6 +251,9 @@ object vegeta {
 	var property imagenActualIndex = 0
 	var property position = game.at(4, 1)
 	var property transformacion = self
+	var property vidas = 100000
+
+	
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
@@ -261,8 +281,12 @@ object vegeta {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
+	method restarVidas(vida) {
+		vidas -= vida
+	}
+
 	method colisiono(personaje) {
-		
+		self.restarVidas(1)
 	}
 }
 
@@ -271,6 +295,7 @@ object gohan {
 	var property imagenActualIndex = 0
 	var property position = game.at(7, 6)
 	var property transformacion = self
+	var property vidas = 100000
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
@@ -299,8 +324,12 @@ object gohan {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
+	method restarVidas(vida) {
+		vidas -= vida
+	}
+
 	method colisiono(personaje) {
-		
+		self.restarVidas(1)
 	}
 }
 

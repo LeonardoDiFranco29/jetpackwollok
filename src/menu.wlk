@@ -6,15 +6,16 @@ import randomizer.*
 
 object administradorEscudo {
     method verificarEscudo() {
-        if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
-		    barry.equiparseEscudo()
-        } else if (contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3){
-		    barry.equiparseEscudo()
-		} else if (contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4){
-            barry.equiparseEscudo()
-		} else if (contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5){
-		    barry.equiparseEscudo()
-        }
+        barry.equiparseEscudo()
+        // if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
+		//     barry.equiparseEscudo()
+        // } else if (contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3){
+		//     barry.equiparseEscudo()
+		// } else if (contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4){
+        //     barry.equiparseEscudo()
+		// } else if (contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5){
+		//     barry.equiparseEscudo()
+        // }
     }
 }
 
@@ -59,7 +60,13 @@ object contadorMonedas {
         monedas += num
     }
     method restarMoneda(num) {
+       if(self.verificarResta(num)){
         monedas -= num
+       } else {monedas=0}
+    }
+
+    method verificarResta(num) {
+        return monedas - num > 0
     }
 
     method text() {
@@ -75,12 +82,12 @@ object contadorMonedas {
 object contadorVidasBarry {
     var property position = game.at(0,8)
     
-    method vidas() {
+    method vidas(barry) {
         return barry.vidas()
     }
 
     method text() {
-        return self.vidas().toString()
+        return barry.vidas().toString()
     }
 
     method textColor() {
