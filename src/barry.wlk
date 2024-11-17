@@ -34,7 +34,7 @@ object barry {
 		}
 	}
 
-	method puedoPonermeEscudo() {
+	method puedoPonermeEscudo() { //Revisar esto
 		return (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2) or 
 				(contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3) or 
 				(contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4) or 
@@ -43,11 +43,11 @@ object barry {
 	}
 
 	method transformarse() {
-		if (0.randomUpTo(100) < 90) {
+		if (0.randomUpTo(100) < 20) {
 			self.transformarseA(ssj)
 			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
 			self.destransformacion()
-		} else if(0.randomUpTo(100) < 5){
+		} else if(0.randomUpTo(100) < 25){
 			self.transformarseA(profitBird)
 			self.destransformacion()
 		} else {
@@ -73,9 +73,6 @@ object barry {
 		vegeta.ponerImagenesDefault()
 		gohan.ponerImagenesDefault()
 		self.vidas(1)
-		//game.removeTickEvent("bajarGravedad")
-		//game.removeTickEvent("subirGravedad")
-		//generadorDeObjetos.gravedad()
 	}
 
 	method agarroMoneda() {
@@ -94,6 +91,10 @@ object barry {
 	method agregarVidas(vida) {
 		vidas += vida
 		contadorVidasBarry.vidas(self)
+	}
+
+	method colisiono() {
+		transformacion.colisiono(self)
 	}
 }
 
@@ -126,7 +127,6 @@ class Transformacion {
 	method cantidadMonedasQueAgarra()
 
 	method colisiono(personaje) {
-		personaje.restarVidas(1)
         personaje.destransformarse()
 	}
 }
@@ -146,10 +146,11 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	}
 
 	override method colisiono(personaje) {
-
+		game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
 	}
 }
 
+//Herencia entre los personajes de Dragol Ball, para que hereden de ssj (Hacer class DragonBall)
 object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 3){
 	var property imagenActualIndex = 0
 	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
@@ -184,8 +185,12 @@ object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2
     }
 
 	override method colisiono(personaje) {
-		super(personaje)
-        game.removeTickEvent("ssjimagen")
+		if (personaje.vidas() == 3) {
+			personaje.restarVidas(1)
+		} else {
+			super(personaje)
+			game.removeTickEvent("ssjimagen")
+		}
 	}
 
 	override method cantidadMonedasQueAgarra() {
@@ -206,16 +211,12 @@ object picolo {
 	var property imagenActualIndex = 0
 	var property position = game.at(8, 4)
 	var property transformacion = self
-	var property vidas = 100000
-
-	
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
 	}
 
 	method lanzarPoder() {
-	  
 	  game.addVisual(self)
 	  game.onTick(120, "picolo", {self.cambiarImagen()})
 	  game.schedule(15000, {self.ponerImagenesDefault()})
@@ -237,12 +238,8 @@ object picolo {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
-	method restarVidas(vida) {
-		vidas -= vida
-	}
+	method colisiono() {
 
-	method colisiono(personaje) {
-		self.restarVidas(1)
 	}
 }
 
@@ -251,9 +248,6 @@ object vegeta {
 	var property imagenActualIndex = 0
 	var property position = game.at(4, 1)
 	var property transformacion = self
-	var property vidas = 100000
-
-	
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
@@ -281,12 +275,8 @@ object vegeta {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
-	method restarVidas(vida) {
-		vidas -= vida
-	}
+	method colisiono() {
 
-	method colisiono(personaje) {
-		self.restarVidas(1)
 	}
 }
 
@@ -302,7 +292,6 @@ object gohan {
 	}
 
 	method lanzarPoder() {
-	  
 	  game.addVisual(self)
 	  game.onTick(200, "gohan", {self.cambiarImagen()})
 	  game.schedule(15000, {self.ponerImagenesDefault()})
@@ -313,7 +302,6 @@ object gohan {
 	method ponerImagenesDefault() {
 	 game.removeTickEvent("gohan") 
 	 game.removeVisual(self)
-	  
 	}
 
 	method image() {
@@ -324,12 +312,8 @@ object gohan {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
-	method restarVidas(vida) {
-		vidas -= vida
-	}
+	method colisiono() {
 
-	method colisiono(personaje) {
-		self.restarVidas(1)
 	}
 }
 
