@@ -182,42 +182,15 @@ class Misil inherits ObjetoVolador {
     }
 
     method colisiono(personaje) {
-        if(personaje.vidas() == 1){
-            game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
-        } else {self.continuarRestandoVida(personaje)}
+        personaje.colisiono()
         administrador.sacarMoneda(5)
         self.explotar()
     }
-
-    method continuarRestandoVida(personaje) {
-        if(personaje.vidas() == 2){
-            personaje.transformacion().colisiono(personaje)
-        } else {personaje.restarVidas(1)}
-    }
-
-
-    // Revisar
-    // method colisiono(personaje) {
-    //     if (personaje.vidas() == 1){
-    //         game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
-    //     } else if (personaje.vidas() >= 3){
-    //         personaje.restarVidas(1)
-    //     } else if (personaje.vidas() == 2){
-    //         personaje.transformacion().colisiono(personaje)
-    //     }
-    //     administrador.sacarMoneda(5)
-    
-    //    self.explotar()
-        
-    // }
 
     method explotar() {
       imagenActual = explosiones
       
     }
-
-
-
 }
 
 class Token inherits ObjetoVolador {

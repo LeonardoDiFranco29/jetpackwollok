@@ -34,7 +34,7 @@ object barry {
 		}
 	}
 
-	method puedoPonermeEscudo() {
+	method puedoPonermeEscudo() { //Revisar esto
 		return (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2) or 
 				(contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3) or 
 				(contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4) or 
@@ -43,11 +43,11 @@ object barry {
 	}
 
 	method transformarse() {
-		if (0.randomUpTo(100) < 90) {
+		if (0.randomUpTo(100) < 20) {
 			self.transformarseA(ssj)
 			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
 			self.destransformacion()
-		} else if(0.randomUpTo(100) < 5){
+		} else if(0.randomUpTo(100) < 50){
 			self.transformarseA(profitBird)
 			self.destransformacion()
 		} else {
@@ -73,9 +73,6 @@ object barry {
 		vegeta.ponerImagenesDefault()
 		gohan.ponerImagenesDefault()
 		self.vidas(1)
-		//game.removeTickEvent("bajarGravedad")
-		//game.removeTickEvent("subirGravedad")
-		//generadorDeObjetos.gravedad()
 	}
 
 	method agarroMoneda() {
@@ -94,6 +91,10 @@ object barry {
 	method agregarVidas(vida) {
 		vidas += vida
 		contadorVidasBarry.vidas(self)
+	}
+
+	method colisiono() {
+		transformacion.colisiono(self)
 	}
 }
 
@@ -126,7 +127,6 @@ class Transformacion {
 	method cantidadMonedasQueAgarra()
 
 	method colisiono(personaje) {
-		personaje.restarVidas(1)
         personaje.destransformarse()
 	}
 }
@@ -146,7 +146,7 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	}
 
 	override method colisiono(personaje) {
-
+		game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
 	}
 }
 
@@ -184,8 +184,12 @@ object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2
     }
 
 	override method colisiono(personaje) {
-		super(personaje)
-        game.removeTickEvent("ssjimagen")
+		if (personaje.vidas() == 3) {
+			personaje.restarVidas(1)
+		} else {
+			super(personaje)
+			game.removeTickEvent("ssjimagen")
+		}
 	}
 
 	override method cantidadMonedasQueAgarra() {
@@ -201,32 +205,13 @@ object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2
 	}
 }
 
-object picolo {
-	var property imagenes = ["pi1.png","pi2.png","pi3.png","pi4.png","pi5.png","pi6.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png"]
+class DragonBall {
+	var property imagenes
 	var property imagenActualIndex = 0
-	var property position = game.at(8, 4)
-	var property transformacion = self
-	var property vidas = 100000
-
-	
+	var property position
 
 	method agarroMoneda() {
 		administrador.sumarMoneda(1)
-	}
-
-	method lanzarPoder() {
-	  
-	  game.addVisual(self)
-	  game.onTick(120, "picolo", {self.cambiarImagen()})
-	  game.schedule(15000, {self.ponerImagenesDefault()})
-	  game.schedule(20000, {self.ponerImagenesDefault()})
-	  game.onCollideDo(self, {cosa => cosa.colisiono(self)})
-	}
-
-	method ponerImagenesDefault() {
-	 game.removeTickEvent("picolo") 
-	 game.removeVisual(self)
-	  
 	}
 
 	method image() {
@@ -237,99 +222,46 @@ object picolo {
         imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
     }
 
-	method restarVidas(vida) {
-		vidas -= vida
+	method colisiono() {
+
 	}
 
-	method colisiono(personaje) {
-		self.restarVidas(1)
+	method lanzarPoder() {
+	  game.addVisual(self)
+	  game.onTick(120, self.nombreDeEventoImagen(), {self.cambiarImagen()})
+	  game.schedule(15000, {self.ponerImagenesDefault()})
+	  game.schedule(20000, {self.ponerImagenesDefault()})
+	  game.onCollideDo(self, {cosa => cosa.colisiono(self)})
+	}
+
+	method ponerImagenesDefault() {
+	 game.removeTickEvent(self.nombreDeEventoImagen()) 
+	 game.removeVisual(self)
+	  
+	}
+
+	method nombreDeEventoImagen() {
+		return self.prefijoDeEvento() + "Imagen" + self.identity()
+	}
+
+	method prefijoDeEvento()
+}
+
+object picolo inherits DragonBall(imagenes = ["pi1.png","pi2.png","pi3.png","pi4.png","pi5.png","pi6.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png","pi4.png","pi7.png","pi8.png"], position = game.at(8, 4) ) {
+	override method prefijoDeEvento() {
+		return "picolo"
 	}
 }
 
-object vegeta {
-	var property imagenes = ["ve1.png","ve2.png","ve3.png","ve4.png","ve5.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png"]
-	var property imagenActualIndex = 0
-	var property position = game.at(4, 1)
-	var property transformacion = self
-	var property vidas = 100000
-
-	
-
-	method agarroMoneda() {
-		administrador.sumarMoneda(1)
-	}
-
-	method lanzarPoder() {
-	  game.addVisual(self)
-	  game.onTick(200, "vegeta", {self.cambiarImagen()})
-	  game.schedule(15000, {self.ponerImagenesDefault()})
-	  game.schedule(20000, {self.ponerImagenesDefault()})
-	  game.onCollideDo(self, {cosa => cosa.colisiono(self)})
-	}
-
-	method ponerImagenesDefault() {
-	 game.removeTickEvent("vegeta") 
-	 game.removeVisual(self)
-	  
-	}
-
-	method image() {
-		return imagenes.get(imagenActualIndex)
-	}
-
-	method cambiarImagen() {
-        imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
-    }
-
-	method restarVidas(vida) {
-		vidas -= vida
-	}
-
-	method colisiono(personaje) {
-		self.restarVidas(1)
+object vegeta inherits DragonBall(imagenes = ["ve1.png","ve2.png","ve3.png","ve4.png","ve5.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png","ve3.png","ve4.png","ve6.png","ve7.png"], position = game.at(4, 1)){
+	override method prefijoDeEvento() {
+		return "vegeta"
 	}
 }
 
-object gohan {
-	var property imagenes = ["gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png"]
-	var property imagenActualIndex = 0
-	var property position = game.at(7, 6)
-	var property transformacion = self
-	var property vidas = 100000
-
-	method agarroMoneda() {
-		administrador.sumarMoneda(1)
-	}
-
-	method lanzarPoder() {
-	  
-	  game.addVisual(self)
-	  game.onTick(200, "gohan", {self.cambiarImagen()})
-	  game.schedule(15000, {self.ponerImagenesDefault()})
-	  game.schedule(20000, {self.ponerImagenesDefault()})
-	  game.onCollideDo(self, {cosa => cosa.colisiono(self)})
-	}
-
-	method ponerImagenesDefault() {
-	 game.removeTickEvent("gohan") 
-	 game.removeVisual(self)
-	  
-	}
-
-	method image() {
-		return imagenes.get(imagenActualIndex)
-	}
-
-	method cambiarImagen() {
-        imagenActualIndex = (imagenActualIndex + 1) % imagenes.size()
-    }
-
-	method restarVidas(vida) {
-		vidas -= vida
-	}
-
-	method colisiono(personaje) {
-		self.restarVidas(1)
+object gohan inherits DragonBall(imagenes = ["gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png","gohan2.png","gohan3.png","gohan4.png","gohan5.png","gohan5.png"], position = game.at(7, 6)){
+	override method prefijoDeEvento() {
+		return "gohan"
 	}
 }
 
@@ -345,7 +277,7 @@ object profitBird inherits Transformacion(image = "goldbird3.png", vidas = 2) {
 
 	override method cantidadMonedasQueAgarra() {
 		return 2
-	} 
+	}
 }
 
 object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png", vidas = 2){
