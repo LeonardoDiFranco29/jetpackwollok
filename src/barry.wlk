@@ -34,7 +34,7 @@ object barry {
 		}
 	}
 
-	method puedoPonermeEscudo() { //Revisar esto
+	method puedoPonermeEscudo() {
 		return (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2) or 
 				(contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3) or 
 				(contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4) or 
@@ -150,6 +150,7 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	}
 }
 
+//Herencia entre los personajes de Dragol Ball, para que hereden de ssj (Hacer class DragonBall)
 object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 3){
 	var property imagenActualIndex = 0
 	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
