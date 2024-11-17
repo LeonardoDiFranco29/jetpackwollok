@@ -6,16 +6,13 @@ import randomizer.*
 
 object administradorEscudo {
     method verificarEscudo() {
-        barry.equiparseEscudo()
-        // if (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2 ){
-		//     barry.equiparseEscudo()
-        // } else if (contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3){
-		//     barry.equiparseEscudo()
-		// } else if (contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4){
-        //     barry.equiparseEscudo()
-		// } else if (contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5){
-		//     barry.equiparseEscudo()
-        // }
+        if (self.validarEscudo()) {
+            barry.equiparseEscudo()
+        }
+    }
+
+    method validarEscudo() {
+        return contadorMonedas.tieneSuficienteParaEscudo(fondoJuego.nivel())
     }
 }
 
@@ -29,19 +26,8 @@ object administrador {
         contadorMonedas.restarMoneda(num)
     }
 
-    /*
-    method sumarVida(vida) {
-        barry.agregarVidas(vida)
-    }
-
-    method sacarVida(vida) {
-        barry.restarVidas(vida)
-    } 
-    */
-
     method pararJuegoYMostrarGameOver() {
 	    game.removeVisual(botonPlay)
-	    //game.removeVisual(fondoJuego)
 	    game.addVisual(fondoFinish)
         game.addVisual(hasVolado)
 	    game.addVisual(gameOver)
@@ -77,6 +63,9 @@ object contadorMonedas {
         return "FFFF00FF"
     }
 
+    method tieneSuficienteParaEscudo(nivel) {
+        return (monedas >= 25 * (nivel-1))
+    }
 }
 
 object contadorVidasBarry {
@@ -198,8 +187,6 @@ class Menu {
 
 	    keyboard.up().onPressDo({barry.volar()})
         keyboard.space().onPressDo({barry.lanzarPoder()})
-	    //keyboard.s().onPressDo({generadorDeObjetos.subirGravedad()})
-        //keyboard.w().onPressDo({generadorDeObjetos.bajarGravedad()})
   
         game.onTick(50000, "fondo", {fondoJuego.subirNivel()})
         game.onTick(50100, "barryescudo", {administradorEscudo.verificarEscudo()})

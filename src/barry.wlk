@@ -27,27 +27,27 @@ object barry {
 	}
 
 	method equiparseEscudo() {
-		if(self.puedoPonermeEscudo()){
-			transformacion = barryConEscudo
-			self.vidas(2)
-			game.schedule(20000, {self.destransformarse()})
-		}
+		/*if(self.puedoPonermeEscudo()){*/
+		transformacion = barryConEscudo
+		self.vidas(2)
+		game.schedule(20000, {self.destransformarse()})
+		//}
 	}
-
-	method puedoPonermeEscudo() {
-		return (contadorMonedas.monedas() >= 20 and fondoJuego.nivel() == 2) or 
+	/*
+	method puedoPonermeEscudo() { //Revisar
+		return (contadorMonedas.monedas() >= 25 and fondoJuego.nivel() == 2) or 
 				(contadorMonedas.monedas() >= 50 and fondoJuego.nivel() == 3) or 
 				(contadorMonedas.monedas() >= 75 and fondoJuego.nivel() == 4) or 
-				(contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5)
-	  
+				(contadorMonedas.monedas() >= 100 and fondoJuego.nivel() == 5) 
 	}
+	*/
 
 	method transformarse() {
 		if (0.randomUpTo(100) < 20) {
 			self.transformarseA(ssj)
 			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
 			self.destransformacion()
-		} else if(0.randomUpTo(100) < 50){
+		} else if(0.randomUpTo(100) < 20){
 			self.transformarseA(profitBird)
 			self.destransformacion()
 		} else {
@@ -96,6 +96,10 @@ object barry {
 	method colisiono() {
 		transformacion.colisiono(self)
 	}
+
+	method esMillonario() {
+		return transformacion.esMillonario()
+	}
 }
 
 class Transformacion {
@@ -129,6 +133,10 @@ class Transformacion {
 	method colisiono(personaje) {
         personaje.destransformarse()
 	}
+
+	method esMillonario() {
+		return false
+	}
 }
 
 object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
@@ -150,7 +158,6 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	}
 }
 
-//Herencia entre los personajes de Dragol Ball, para que hereden de ssj (Hacer class DragonBall)
 object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], vidas = 3){
 	var property imagenActualIndex = 0
 	var property imagenesPoder = ["ataq1.png", "ataq8.png","ataq3.png","ataq4.png","ataq8.png","ataq6.png","ataq7.png","ataq8.png"]
@@ -238,7 +245,6 @@ class DragonBall {
 	method ponerImagenesDefault() {
 	 game.removeTickEvent(self.nombreDeEventoImagen()) 
 	 game.removeVisual(self)
-	  
 	}
 
 	method nombreDeEventoImagen() {
@@ -308,6 +314,9 @@ object millonario inherits Transformacion (image = "barryrich1.png", vidas = 2){
 
 	override method cantidadMonedasQueAgarra() {
 		return 2
-	} 
-}
+	}
 
+	override method esMillonario() {
+		return true
+	}
+}

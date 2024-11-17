@@ -12,16 +12,6 @@ object generadorDeObjetos {
     method gravedad() {
         game.onTick(100, "gravedad", {barry.caer()}) 
     }
-
-    /*
-    method subirGravedad() {
-        game.onTick(50, "subirGravedad", {barry.volar()})
-    }
-
-    method bajarGravedad() {
-        game.onTick(50, "bajarGravedad", {barry.caer()})
-    }
-    */
 }
 
 class Generador {
@@ -81,8 +71,9 @@ object generadorDeMonedas inherits Generador{
     override method frecuenciaDeMovimiento() {
         return 400
     }
+
     override method position() {
-        return if (barry.transformacion() == millonario) {
+        return if (barry.esMillonario()) {
             game.at(12, barry.position().y())
         }
         else {
@@ -138,7 +129,6 @@ class ObjetoVolador {
     }
 
     method desaparecer() {
-        //visible = false //revisar
         game.removeVisual(self) // Elimina el objeto actual
         game.removeTickEvent(self.nombreDeEventoMovimiento()) // Elimina el onTick de movimiento
         game.removeTickEvent(self.nombreDeEventoImagen()) // Elimina el onTick de imagen
