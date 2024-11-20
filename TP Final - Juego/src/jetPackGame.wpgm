@@ -1,0 +1,13 @@
+import wollok.game.*
+import barry.*
+import posiciones.*
+import extras.*
+import randomizer.*
+import menu.*
+
+
+program jetPackGame {
+	const menu = new Menu() // Crear una instancia del menú
+    menu.init() // Inicializar el menú
+	game.start()
+}
