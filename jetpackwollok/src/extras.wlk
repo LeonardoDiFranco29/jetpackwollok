@@ -204,6 +204,7 @@ class Token inherits ObjetoVolador {
 }
 
 class Coin inherits ObjetoVolador {
+    const property sonido = sonidoCoin
 
     override method prefijoDeEvento() {
         return "coin"
@@ -211,8 +212,15 @@ class Coin inherits ObjetoVolador {
 
     method colisiono(personaje) {
         self.desaparecer()
+        sonido.play()
         personaje.agarroMoneda()
         self.reaparecer()
+    }
+}
+
+object sonidoCoin {
+    method play() {
+        game.sound("mario-coin.mp3").play()
     }
 }
 
