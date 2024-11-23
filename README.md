@@ -44,23 +44,23 @@ Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que
 
 ### • Mecánicas del Juego
   Monedas:
-    - Recolectar monedas es crucial para progresar.
-    - Al inicio de cada nivel, si posees una cantidad mínima de monedas, Barry se equipa con un escudo protector, que le otorga una vida extra temporal en caso de colisión con un misil.
-    - Además, algunas transformaciones de Barry requieren 30 monedas para activar un poder especial.
+    ⁃ Recolectar monedas es crucial para progresar.
+    ⁃ Al inicio de cada nivel, si posees una cantidad mínima de monedas, Barry se equipa con un escudo protector, que le otorga una vida extra temporal en caso de colisión con un misil.
+    ⁃ Además, algunas transformaciones de Barry requieren 30 monedas para activar un poder especial.
     
   Transformaciones de Barry:
   Durante el recorrido, encontrarás tokens que permiten a Barry transformarse en versiones mejoradas. Cada transformación tiene habilidades únicas:
 
   SSJ:
-    - Tiene 3 vidas.
-    - Puede activar un poder especial con la barra espaciadora.
+    ⁃ Tiene 3 vidas.
+    ⁃ Puede activar un poder especial con la barra espaciadora.
   ProfitBird:
-    - Tiene 2 vidas.
-    - Duplica el valor de cada moneda recolectada.
+    ⁃ Tiene 2 vidas.
+    ⁃ Duplica el valor de cada moneda recolectada.
   Millonario:
-   - Tiene 2 vidas.
-   - Duplica el valor de las monedas.
-   - Todas las monedas aparecen alineadas en la misma fila que él.
+    ⁃ Tiene 2 vidas.
+    ⁃ Duplica el valor de las monedas.
+    ⁃ Todas las monedas aparecen alineadas en la misma fila que él.
   
   Movimiento de Barry:
   Barry solo puede subir cuando activas el jetpack y, debido a la gravedad, descenderá automáticamente.
@@ -69,13 +69,13 @@ Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que
   Inicio del Juego: Presiona la tecla Enter para comenzar.
   
   Controles:
-    - Tecla W: Activa el jetpack para hacer volar a Barry.
-    - Barra espaciadora: Activa el poder especial en la transformación SSJ.
+    ⁃ Tecla W: Activa el jetpack para hacer volar a Barry.
+    ⁃ Barra espaciadora: Activa el poder especial en la transformación SSJ.
 
 ### • Progresión por Niveles
   El juego consta de 5 niveles. Con cada nivel superado:
-    - Aumenta la cantidad de misiles que aparecen en pantalla.
-    - Incrementa la velocidad de los misiles, haciendo más difícil esquivarlos.
+    ⁃ Aumenta la cantidad de misiles que aparecen en pantalla.
+    ⁃ Incrementa la velocidad de los misiles, haciendo más difícil esquivarlos.
 
 ## Otros
 
