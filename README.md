@@ -13,27 +13,27 @@
 
 ![Menu Final]()
 ### Niveles
-![Nivel 1]()
-
-![Nivel 2](https://github.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/blob/main/assets/fondoo2.png)
-
-![Nivel 3]()
-
-![Nivel 4]()
-
-![Nivel 5]()
-
+- Nivel 1  
+![Nivel 1]()  
+- Nivel 2  
+![Nivel 2](https://github.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/blob/main/assets/fondoo2.png)  
+- Nivel 3  
+![Nivel 3]()  
+- Nivel 4  
+![Nivel 4]()  
+- Nivel 5  
+![Nivel 5]()  
 
 ### Transformaciones
-- Barry Normal
+- Barry Normal  
 ![Barry Normal](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrynormal.png)  
 - Barry SSJ  
 ![Barry SSJ](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrysupersj1.png)  
-- Barry ProfitBird
+- Barry ProfitBird  
 ![Barry ]()  
-- Barry Millonario
+- Barry Millonario  
 ![Barry ]()  
-- Barry con escudo
+- Barry con escudo  
 ![Barry ]()  
 
 ## Reglas de Juego / Instrucciones
