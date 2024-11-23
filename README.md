@@ -51,12 +51,12 @@ Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que
   Transformaciones de Barry:  
   Durante el recorrido, encontrarás tokens que permiten a Barry transformarse en versiones mejoradas. Cada transformación tiene habilidades únicas:  
 
-  SSJ:  
-    ⁃ Tiene 3 vidas.  
-    ⁃ Puede activar un poder especial con la barra espaciadora.  
-  ProfitBird:  
-    ⁃ Tiene 2 vidas.  
-    ⁃ Duplica el valor de cada moneda recolectada.  
+    SSJ:  
+      ⁃ Tiene 3 vidas.  
+      ⁃ Puede activar un poder especial con la barra espaciadora.  
+    ProfitBird:  
+      ⁃ Tiene 2 vidas.  
+      ⁃ Duplica el valor de cada moneda recolectada.  
   Millonario:  
     ⁃ Tiene 2 vidas.  
     ⁃ Duplica el valor de las monedas.  
