@@ -73,9 +73,9 @@ Inicio del Juego: Presiona la tecla Enter para comenzar.
   - Barra espaciadora: Activa el poder especial en la transformación SSJ.  
 
 ### Progresión por Niveles
-  El juego consta de 5 niveles. Con cada nivel superado:  
-    - Aumenta la cantidad de misiles que aparecen en pantalla.  
-    - Incrementa la velocidad de los misiles, haciendo más difícil esquivarlos.
+El juego consta de 5 niveles. Con cada nivel superado:  
+  - Aumenta la cantidad de misiles que aparecen en pantalla.
+  - Incrementa la velocidad de los misiles, haciendo más difícil esquivarlos.
 
 ## Otros
 
