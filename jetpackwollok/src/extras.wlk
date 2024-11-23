@@ -159,7 +159,7 @@ class ObjetoVolador {
     method prefijoDeEvento() 
 }
 
-class Misil inherits ObjetoVolador {
+class Misil inherits ObjetoVolador() {
 
     const explosiones = ["explosion1.png","explosion1.png","explosion1.png","explosion1.png","explosion1.png","explosion1.png"]
 
@@ -173,7 +173,8 @@ class Misil inherits ObjetoVolador {
 
     method colisiono(personaje) {
         personaje.colisiono()
-        administrador.sacarMoneda(5)
+        game.sound("explosion_misil.mp3").play()
+        barry.sacarMonedas(5)
         self.explotar()
     }
 
@@ -182,7 +183,7 @@ class Misil inherits ObjetoVolador {
     }
 }
 
-class Token inherits ObjetoVolador {
+class Token inherits ObjetoVolador() {
 
     override method prefijoDeEvento() {
         return "token"
@@ -198,13 +199,13 @@ class Token inherits ObjetoVolador {
 
     method colisiono(personaje) {
         self.desaparecer()
+        game.sound("token.mp3").play()
         personaje.transformarse()
         self.reaparecer()
     }
 }
 
-class Coin inherits ObjetoVolador {
-    const property sonido = sonidoCoin
+class Coin inherits ObjetoVolador() {
 
     override method prefijoDeEvento() {
         return "coin"
@@ -212,15 +213,9 @@ class Coin inherits ObjetoVolador {
 
     method colisiono(personaje) {
         self.desaparecer()
-        sonido.play()
+        game.sound("coin.mp3").play()
         personaje.agarroMoneda()
         self.reaparecer()
-    }
-}
-
-object sonidoCoin {
-    method play() {
-        game.sound("mario-coin.mp3").play()
     }
 }
 

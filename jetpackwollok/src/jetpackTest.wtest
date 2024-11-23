@@ -7,24 +7,26 @@ describe "Test Jetpack" {
     const token = new Token(generador = generadorDeTokens)
     const misil = new Misil()
     const moneda = new Coin(generador = generadorDeMonedas)
-
+    
     method initialize() {
         game.addVisual(fondoJuego)
 	    game.addVisual(reloj)
 	    game.addVisual(barry)
         game.addVisual(contadorMonedas)
-        game.addVisual(contadorVidasBarry)
+        game.addVisual(contadorVidas)
     }
+    
 
     test "Al agarrar un token Barry se transforma" {
         assert.equals(normal, barry.transformacion())
         token.colisiono(barry)
         assert.notThat(barry.transformacion() == normal) //Consultar si es correcto.
         assert.that(barry.vidas() >= 2)
+        assert.that(contadorVidas.vidas(barry) >= 2)
     }
 
     test "Al estar transformado y teniendo 2 vidas si barry colisiona contra un misil, se destransforma" {
-        barry.transformacion(millonario)
+        barry.transformarseA(millonario)
         assert.equals("barryrich1.png", barry.image())
         assert.equals(2, barry.vidas())
         misil.colisiono(barry)
@@ -33,22 +35,28 @@ describe "Test Jetpack" {
     }
 
     test "Al agarrar una moneda, se suma una moneda al contador, cuando barry es normal o ssj, si es millonario o profitBird suma 2" {
-        barry.transformacion(normal)
+        barry.transformarseA(normal)
         moneda.colisiono(barry)
-        assert.equals(1, contadorMonedas.monedas())
+        assert.equals(1, barry.monedas())
 
-        barry.transformacion(ssj)
+        barry.transformarseA(ssj)
         moneda.colisiono(barry)
-        assert.equals(2, contadorMonedas.monedas())
+        assert.equals(2, barry.monedas())
 
-        barry.transformacion(millonario)
+        barry.transformarseA(millonario)
         moneda.colisiono(barry)
-        assert.equals(4, contadorMonedas.monedas())
+        assert.equals(4, barry.monedas())
 
-        barry.transformacion(profitBird)
+        barry.transformarseA(profitBird)
         moneda.colisiono(barry)
-        assert.equals(6, contadorMonedas.monedas())
+        assert.equals(6, barry.monedas())
     }
+
+    test "Al tener menos de 5 monedas y colisionar contra un misil, se restan 5 monedas pero no baja de 0" {
+        barry.monedas(3)
+        misil.colisiono(barry)
+        assert.equals(0, barry.monedas())
+    } 
 
     test "Al tener monedas suficientes y pasar de nivel barry se equipa un escudo" {
         contadorMonedas.monedas(25)
@@ -103,23 +111,23 @@ describe "Test Jetpack" {
     }
 
     test "Al transformarse las vidas de barry aumentan y cambia su imagen" {
-        barry.transformacion(normal)
+        barry.transformarseA(normal)
         assert.equals(1, barry.vidas())
         assert.equals("barrynormal.png", barry.image())
 
-        barry.transformacion(ssj)
+        barry.transformarseA(ssj)
         assert.equals(3, barry.vidas())
-        assert.equals(["barrysupersj1.png", "barrysupersj2.png", "barrysupersj3.png","barrysupersj4.png"], barry.image())
+        assert.equals("barrysupersj1.png", barry.image())
 
-        barry.transformacion(profitBird)
+        barry.transformarseA(profitBird)
         assert.equals(2, barry.vidas())
         assert.equals("goldbird3.png", barry.image())
 
-        barry.transformacion(barryConEscudo)
+        barry.transformarseA(barryConEscudo)
         assert.equals(2, barry.vidas())
         assert.equals("barrynormalconescudo.png", barry.image())
 
-        barry.transformacion(millonario)
+        barry.transformarseA(millonario)
         assert.equals(2, barry.vidas())
         assert.equals("barryrich1.png", barry.image())
     }

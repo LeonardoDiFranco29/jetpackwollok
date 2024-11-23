@@ -18,43 +18,31 @@ object administradorEscudo {
 }
 
 object administrador {
-
-    method sumarMoneda(num) {
-        contadorMonedas.agregarMoneda(num)
-    }
-
-    method sacarMoneda(num) {
-        contadorMonedas.restarMoneda(num)
-    }
-
     method pararJuegoYMostrarGameOver() {
-	    game.removeVisual(botonPlay)
+        menu.sonido().stop()
+        game.removeVisual(botonPlay)
 	    game.addVisual(fondoFinish)
         game.addVisual(hasVolado)
 	    game.addVisual(gameOver)
+        game.sound("gameover.mp3").play()
         reloj.position(game.at(5,7))
         contadorMonedas.position(game.at(6,2))
-        contadorVidasBarry.position(game.at(11,11))
+        contadorVidas.position(game.at(11,11))
 	    game.schedule(100,{game.stop()})
+    }
+
+    method sonidoWin() {
+        game.sound("musicawin.mp3").play()
+    }
+
+    method sonidoGameOver() {
+        game.sound("gameover.mp3").play()
     }
 } 
 
 object contadorMonedas {
     var property monedas = 0
     var property position = game.at(0,8)
-  
-    method agregarMoneda(num) {
-        monedas += num
-    }
-    method restarMoneda(num) {
-       if(self.verificarResta(num)){
-        monedas -= num
-       } else {monedas=0}
-    }
-
-    method verificarResta(num) {
-        return monedas - num > 0
-    }
 
     method text() {
         return monedas.toString() +"\n" + "\n" + "\n"
@@ -69,15 +57,15 @@ object contadorMonedas {
     }
 }
 
-object contadorVidasBarry {
+object contadorVidas {
     var property position = game.at(0,8)
     
-    method vidas(barry) {
-        return barry.vidas()
+    method vidas(personaje) {
+        return personaje.vidas()
     }
 
     method text() {
-        return barry.vidas().toString()
+        return self.vidas(barry).toString()
     }
 
     method textColor() {
@@ -117,6 +105,7 @@ object fondoJuego {
     }
 
     method subirNivel() {
+        game.sound("levelup.mp3").play()
         nivel += 1
     }
 
@@ -138,11 +127,12 @@ object gameOver {
 
     method position() = game.at(6,10)
 }
-class Menu {
+object menu {
     var property juegoIniciado = false
+    const property sonido = game.sound("MainTheme.mp3")
 
     method init() {
-        game.title("jetpackjoyride")
+        game.title("Jetpack Joyride")
 	    game.height(10)
 	    game.width(12)
 	    game.cellSize(50)
@@ -157,6 +147,8 @@ class Menu {
         self.juegoIniciado(true) // Marcar el juego como iniciado
         game.removeVisual(fondoMenu) // Limpiar visuales del menú
         game.removeVisual(botonPlay)
+        sonido.shouldLoop(true)
+        sonido.play()
         // Llamar a la función de inicialización del juego
         self.iniciarJuego()
     }
@@ -167,8 +159,7 @@ class Menu {
 	    game.addVisual(reloj)
 	    game.addVisual(barry)
         game.addVisual(contadorMonedas)
-        game.addVisual(contadorVidasBarry)
-    
+        game.addVisual(contadorVidas)
 
 	    // Crear instancias de clases
         generadorDeMisiles.construir()
@@ -191,9 +182,8 @@ class Menu {
   
         game.onTick(50000, "fondo", {fondoJuego.subirNivel()})
         game.onTick(50100, "barryescudo", {administradorEscudo.equiparEscudo(barry)})
-        game.schedule(250200, {administrador.pararJuegoYMostrarGameOver()})
+        game.schedule(250200, {administrador.pararJuegoYMostrarGameOver() administrador.sonidoWin()})
         // Colisiones
         game.onCollideDo(barry, {cosa => cosa.colisiono(barry)}) 
-         
     }
 }

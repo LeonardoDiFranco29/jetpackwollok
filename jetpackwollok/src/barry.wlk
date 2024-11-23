@@ -7,6 +7,7 @@ object barry {
 	var property position = game.at(1,5)
 	var property transformacion = normal
 	var property vidas = 1
+	var property monedas = 0
 
 	method image() {
 		return transformacion.image()
@@ -14,8 +15,8 @@ object barry {
 
 	method mover(direccion) {
         const nuevaPosicion = direccion.siguiente(self.position()) 
-        tablero.validarDentro(nuevaPosicion) // Validar el movimiento
-        self.position(nuevaPosicion) // Actualizar la posición 
+        tablero.validarDentro(nuevaPosicion)
+        self.position(nuevaPosicion)
     }
 
 	method volar() {
@@ -26,64 +27,58 @@ object barry {
 	  	transformacion.caer()
 	}
 
-	method equiparseEscudo() { //Testeado en: "Al tener monedas suficientes y pasar de nivel barry se equipa un escudo"
-		transformacion = barryConEscudo
-		self.vidas(2)
-		game.schedule(20000, {self.destransformarse()})
+	method equiparseEscudo() {
+		self.transformarseA(barryConEscudo)
 	}
 
-	method transformarse() { //Testeado en: "Al agarrar token Barry se transforma"
-		if (0.randomUpTo(100) < 20) {
+	method transformarse() {
+		if (0.randomUpTo(100) < 30) {
 			self.transformarseA(ssj)
 			game.onTick(60, "ssjimagen", {ssj.cambiarImagen()})
-			self.destransformacion()
-		} else if(0.randomUpTo(100) < 20){
+		} else if(0.randomUpTo(100) < 50) {
 			self.transformarseA(profitBird)
-			self.destransformacion()
 		} else {
 			self.transformarseA(millonario)
-			self.destransformacion()
 		}
 	}
 
-	method transformarseA(_transformacion) { //Testeado en: "Al agarrar token Barry se transforma"
+	method transformarseA(_transformacion) {
 		transformacion = _transformacion
 		self.vidas(_transformacion.vidas())
-	}
-
-	method destransformacion() { //Testeado en: "Al estar transformado y teniendo 2 vidas si colisiona contra un misil, se destransforma"
 		game.schedule(20000, {self.destransformarse()})
 	}
 
-	method destransformarse() { //Testeado en: "Al estar transformado y teniendo 2 vidas si colisiona contra un misil, se destransforma"
+	method destransformarse() {
+		transformacion.resetear()
 		transformacion = normal
-		game.removeTickEvent("ssjimagen")
-		ssj.ki(100)
-		picolo.ponerImagenesDefault()
-		vegeta.ponerImagenesDefault()
-		gohan.ponerImagenesDefault()
 		self.vidas(1)
 	}
 
-	method agarroMoneda() { //Testeado en: "Al agarrar una moneda, se suma una moneda al contador"
-		transformacion.sumarMoneda()
+	method agarroMoneda() {
+		monedas += transformacion.cantidadMonedasQueAgarra()
+		contadorMonedas.monedas(monedas)
+	}
+
+	method sacarMonedas(cantidad) {
+		monedas = (monedas-cantidad).max(0)
+		contadorMonedas.monedas(monedas)
 	}
 
 	method lanzarPoder() {
 		transformacion.lanzarPoder()
 	}
 
-	method restarVidas(vida) { //Testeado en: "Al estar transformado y teniendo 2 vidas si colisiona contra un misil, se destransforma"
+	method restarVidas(vida) {
 		vidas -= vida
-		contadorVidasBarry.vidas(self)
+		contadorVidas.vidas(self)
 	}
 
-	method agregarVidas(vida) { //Testeado en: "Al transformarse Barry tiene más vidas"
+	method agregarVidas(vida) {
 		vidas += vida
-		contadorVidasBarry.vidas(self)
+		contadorVidas.vidas(self)
 	}
 
-	method colisiono() { //Testeado en: "Al agarrar token Barry se transforma" 
+	method colisiono() {
 		transformacion.colisiono(self)
 	}
 
@@ -114,11 +109,9 @@ class Transformacion {
 
 	}
 
-	method sumarMoneda() {
-		administrador.sumarMoneda(self.cantidadMonedasQueAgarra())
+	method cantidadMonedasQueAgarra() {
+		return 1
 	}
-
-	method cantidadMonedasQueAgarra()
 
 	method colisiono(personaje) {
         personaje.destransformarse()
@@ -126,6 +119,10 @@ class Transformacion {
 
 	method esMillonario() {
 		return false
+	}
+
+	method resetear() {
+
 	}
 }
 
@@ -139,12 +136,8 @@ object normal inherits Transformacion(image = "barrynormal.png", vidas = 1) {
 	  	image = "barrynormal.png"
 	}
 
-	override method cantidadMonedasQueAgarra() {
-		return 1
-	}
-
 	override method colisiono(personaje) {
-		game.schedule(200, {administrador.pararJuegoYMostrarGameOver()})
+		game.schedule(200, {administrador.pararJuegoYMostrarGameOver() administrador.sonidoGameOver()})
 	}
 }
 
@@ -190,16 +183,20 @@ object ssj inherits Transformacion (image = ["barrysupersj1.png", "barrysupersj2
 		}
 	}
 
-	override method cantidadMonedasQueAgarra() {
-		return 1
-	}
-
 	override method ponerImagenVolando() {
 
 	}
 
 	override method ponerImagenCayendo() {
 
+	}
+
+	override method resetear() {
+		game.removeTickEvent("ssjimagen")
+		ki = 100
+		picolo.ponerImagenesDefault()
+		vegeta.ponerImagenesDefault()
+		gohan.ponerImagenesDefault()
 	}
 }
 
@@ -209,7 +206,7 @@ class DragonBall {
 	var property position
 
 	method agarroMoneda() {
-		administrador.sumarMoneda(1)
+		barry.agarroMoneda()
 	}
 
 	method image() {
@@ -286,13 +283,9 @@ object barryConEscudo inherits Transformacion(image = "barrynormalconescudo.png"
 	override method ponerImagenCayendo() {
 	  	image = "barrynormalconescudo.png"
 	}
-
-	override method cantidadMonedasQueAgarra() {
-		return 1
-	} 
 }
 
-object millonario inherits Transformacion (image = "barryrich1.png", vidas = 2){
+object millonario inherits Transformacion(image = "barryrich1.png", vidas = 2){
 
 	override method ponerImagenVolando() {
 		image = "barryrich2.png"
@@ -302,7 +295,7 @@ object millonario inherits Transformacion (image = "barryrich1.png", vidas = 2){
 	  	image = "barryrich1.png"
 	}
 
-	override method cantidadMonedasQueAgarra() {
+	override method cantidadMonedasQueAgarra() { //Se puede heredar de profitBird?
 		return 2
 	}
 
