@@ -43,12 +43,12 @@ Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que
   El objetivo principal es recorrer 250 metros para alcanzar el final del nivel 5. A medida que   avanzas, la dificultad aumenta: la cantidad y velocidad de los misiles se incrementan con cada nivel.
 
 ### • Mecánicas del Juego
-  Monedas:
+  Monedas
   ⁃ Recolectar monedas es crucial para progresar.
   ⁃ Al inicio de cada nivel, si posees una cantidad mínima de monedas, Barry se equipa con un escudo protector, que le otorga una vida extra temporal en caso de colisión con un misil.
   ⁃ Además, algunas transformaciones de Barry requieren 30 monedas para activar un poder especial.
     
-  Transformaciones de Barry:
+  Transformaciones de Barry
   Durante el recorrido, encontrarás tokens que permiten a Barry transformarse en versiones mejoradas. Cada transformación tiene habilidades únicas:
 
   SSJ:
