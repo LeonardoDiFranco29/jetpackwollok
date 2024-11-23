@@ -25,14 +25,15 @@
 
 
 ### Transformaciones
+Barry Normal
 ![Barry Normal](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrynormal.png)
-
+Barry SSJ
 ![Barry SSJ](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrysupersj1.png)
-
+Barry ProfitBird
 ![Barry ]()
-
+Barry Millonario
 ![Barry ]()
-
+Barry con escudo
 ![Barry ]()
 
 ## Reglas de Juego / Instrucciones
