@@ -1,4 +1,4 @@
-# Nombre del juego (<- borrar y completar)
+# Jetpack JoyRide
 
 ## Equipo de desarrollo
 
@@ -12,7 +12,7 @@
 ![Menu Inicio](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/menu.png)
 
 ![Menu Final]()
-  ##Niveles
+### Niveles
 ![Nivel 1]()
 
 ![Nivel 2](https://github.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/blob/main/assets/fondoo2.png)
@@ -24,7 +24,7 @@
 ![Nivel 5]()
 
 
-  ##Transformaciones
+### Transformaciones
 ![Barry Normal](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrynormal.png)
 
 ![Barry SSJ](https://raw.githubusercontent.com/obj1unq/2024s2-tp-grupal-juego-2024s2-grupo6/refs/heads/main/assets/barrysupersj1.png)
@@ -39,10 +39,10 @@
 
 Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que utiliza un jetpack para escapar de un laboratorio repleto de misiles.
 
-• Objetivo del Juego
+### • Objetivo del Juego
   El objetivo principal es recorrer 250 metros para alcanzar el final del nivel 5. A medida que   avanzas, la dificultad aumenta: la cantidad y velocidad de los misiles se incrementan con cada nivel.
 
-• Mecánicas del Juego
+### • Mecánicas del Juego
   Monedas:
     - Recolectar monedas es crucial para progresar.
     - Al inicio de cada nivel, si posees una cantidad mínima de monedas, Barry se equipa con un escudo protector, que le otorga una vida extra temporal en caso de colisión con un misil.
@@ -65,14 +65,14 @@ Jetpack JoyRide es un juego de acción donde controlas a Barry, un personaje que
   Movimiento de Barry:
   Barry solo puede subir cuando activas el jetpack y, debido a la gravedad, descenderá automáticamente.
   
-• Instrucciones
+### • Instrucciones
   Inicio del Juego: Presiona la tecla Enter para comenzar.
   
   Controles:
     - Tecla W: Activa el jetpack para hacer volar a Barry.
     - Barra espaciadora: Activa el poder especial en la transformación SSJ.
 
-• Progresión por Niveles
+### • Progresión por Niveles
   El juego consta de 5 niveles. Con cada nivel superado:
     - Aumenta la cantidad de misiles que aparecen en pantalla.
     - Incrementa la velocidad de los misiles, haciendo más difícil esquivarlos.
